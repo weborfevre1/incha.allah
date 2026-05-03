@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAuth } from '@/contexts/AuthContext'
+import { supabaseAuthService } from '@/services/supabase-service'
 import Sidebar from '@/components/Sidebar'
 
 const sidebarItems = [
@@ -12,12 +13,21 @@ const sidebarItems = [
 export default function PersonalInfoPage() {
   const { user, loading, signOut } = useAuth()
   const navigate = useNavigate()
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+  const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) {
       navigate('/login')
     }
   }, [loading, user, navigate])
+
+  useEffect(() => {
+    if (user?.user_metadata?.avatar_url) {
+      setAvatarUrl(user.user_metadata.avatar_url)
+    }
+  }, [user])
 
   if (loading) {
     return (
@@ -40,13 +50,29 @@ export default function PersonalInfoPage() {
   const userEmail = user.email || ''
   const userPhone = user.user_metadata?.phone || ''
 
-  const handleLogout = async () => {
-    await signOut()
-    sessionStorage.clear()
-    localStorage.removeItem('appLoggedIn')
-    localStorage.removeItem('appUserEmail')
-    localStorage.removeItem('appUserName')
-    navigate('/login')
+  const handleUploadClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file || !user) return
+
+    setUploading(true)
+    try {
+      const response = await supabaseAuthService.uploadAvatar(user.id, file)
+      if (response.success) {
+        setAvatarUrl(response.data!)
+        // Optionally refresh user data
+        window.location.reload() // Simple way to refresh metadata
+      } else {
+        alert('Upload failed: ' + response.error)
+      }
+    } catch (error) {
+      alert('Upload error: ' + String(error))
+    } finally {
+      setUploading(false)
+    }
   }
 
   return (
@@ -83,7 +109,11 @@ export default function PersonalInfoPage() {
         <div className="flex-1">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center">
-              <span className="text-xl font-medium text-gray-500">{userName.charAt(0).toUpperCase()}</span>
+              {avatarUrl ? (
+                <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-xl font-medium text-gray-500">{userName.charAt(0).toUpperCase()}</span>
+              )}
             </div>
             <div>
               <h1 className="text-xl font-semibold">{userName}</h1>
@@ -96,12 +126,29 @@ export default function PersonalInfoPage() {
             {/* Profile Photo */}
             <div className="p-6 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
-                  <span className="text-lg font-medium text-gray-500">{userName.charAt(0).toUpperCase()}</span>
+                <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center">
+                  {avatarUrl ? (
+                    <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-lg font-medium text-gray-500">{userName.charAt(0).toUpperCase()}</span>
+                  )}
                 </div>
                 <span className="text-sm font-medium">Profile photo</span>
               </div>
-              <button className="text-sm text-gray-600 hover:text-black">Upload new photo</button>
+              <button
+                onClick={handleUploadClick}
+                disabled={uploading}
+                className="text-sm text-gray-600 hover:text-black disabled:opacity-50"
+              >
+                {uploading ? 'Uploading...' : 'Upload new photo'}
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
             </div>
 
             {/* First Name */}

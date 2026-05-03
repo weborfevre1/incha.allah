@@ -92,6 +92,33 @@ export const supabaseAuthService = {
     }
   },
 
+  async uploadAvatar(userId: string, file: File): Promise<ApiResponse<string>> {
+    try {
+      const fileName = `${Date.now()}-${file.name}`;
+      const path = `avatars/${userId}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage.from('avatars').upload(path, file);
+
+      if (uploadError) {
+        return { success: false, error: uploadError.message };
+      }
+
+      const { data: urlData } = supabase.storage.from('avatars').getPublicUrl(path);
+
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: { avatar_url: urlData.publicUrl }
+      });
+
+      if (updateError) {
+        return { success: false, error: updateError.message };
+      }
+
+      return { success: true, data: urlData.publicUrl };
+    } catch (error) {
+      return { success: false, error: String(error) };
+    }
+  },
+
   onAuthStateChange(callback: (user: SupabaseUser | null) => void) {
     return supabase.auth.onAuthStateChange(async (_event, session) => {
       callback((session?.user as SupabaseUser) || null);
