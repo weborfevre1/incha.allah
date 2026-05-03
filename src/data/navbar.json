@@ -1,0 +1,116 @@
+{
+  "logo": {
+    "label": "Nimara",
+    "href": "/",
+    "image": "/images/nimara-logo.svg"
+  },
+  "mainNav": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Shop",
+      "href": "/product-listing"
+    },
+    {
+      "label": "Checkouts",
+      "href": "#",
+      "children": [
+        { "label": "Cart", "href": "/cart" },
+        { "label": "Checkout (Guest)", "href": "/checkout" },
+        { "label": "Checkout (Logged In)", "href": "/checkout-not-logged-in" },
+        { "label": "Order Confirmation", "href": "/order-confirmation" }
+      ]
+    },
+    {
+      "label": "Authentication",
+      "href": "#",
+      "children": [
+        { "label": "Log In", "href": "/login" },
+        { "label": "Create Account", "href": "/create-account" },
+        { "label": "Forgot Password", "href": "/forgot-password" },
+        { "label": "Order Status", "href": "/order-checkup" }
+      ]
+    },
+    {
+      "label": "Account",
+      "href": "#",
+      "children": [
+        { "label": "Personal Info", "href": "/personal-info" },
+        { "label": "My Orders", "href": "/my-orders" },
+        { "label": "Order Details", "href": "/order-details" },
+        { "label": "Addresses", "href": "/addresses" }
+      ]
+    }
+  ],
+  "rightNav": [
+    {
+      "label": "Search",
+      "icon": "Search",
+      "href": "#"
+    },
+    {
+      "label": "Favorites",
+      "icon": "Heart",
+      "href": "#",
+      "badge": 2
+    },
+    {
+      "label": "Cart",
+      "icon": "ShoppingCart",
+      "href": "#",
+      "badge": 3
+    }
+  ],
+  "favorites": [
+    {
+      "id": "1",
+      "name": "Everyday Solid Black T-Shirt",
+      "price": 40,
+      "originalPrice": 60,
+      "image": "/images/photo-1627225925683-1da7021732ea.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Nike Air Force 1",
+      "price": 139,
+      "image": "/images/photo-1699595749116-33a4a869503c.jpg"
+    }
+  ],
+  "cart": {
+    "itemCount": 3,
+    "subtotal": 229,
+    "freeShippingThreshold": 50,
+    "items": [
+      {
+        "id": "1",
+        "name": "Nike Air Force 1",
+        "price": 149,
+        "image": "/images/photo-1699595749116-33a4a869503c.jpg",
+        "color": "White",
+        "size": "M",
+        "quantity": 1
+      },
+      {
+        "id": "2",
+        "name": "Camo Blend Jacket",
+        "price": 40,
+        "originalPrice": 60,
+        "image": "/images/photo-1708443683334-1e41c52f33ac.jpg",
+        "color": "Camo",
+        "size": "M",
+        "quantity": 1
+      },
+      {
+        "id": "3",
+        "name": "Mahabis Classic",
+        "price": 40,
+        "image": "/images/photo-1603218183500-7e62c3c679.jpg",
+        "color": "White",
+        "size": "M",
+        "quantity": 1
+      }
+    ]
+  }
+}

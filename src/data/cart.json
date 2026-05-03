@@ -1,0 +1,90 @@
+{
+  "promoBanner": {
+    "title": "Summer Sale",
+    "description": "Get up to 50% off on selected items. Limited time offer!",
+    "dismissible": true
+  },
+  "cartTitle": "Shopping Cart",
+  "items": [
+    {
+      "id": "1",
+      "product": {
+        "name": "Nike Air Force 1",
+        "price": 149,
+        "originalPrice": null,
+        "image": "/images/photo-1699595749116-33a4a869503c.jpg"
+      },
+      "color": "White",
+      "size": "M",
+      "quantity": 1,
+      "stockStatus": "In stock"
+    },
+    {
+      "id": "2",
+      "product": {
+        "name": "Camo Blend Jacket",
+        "price": 40,
+        "originalPrice": 60,
+        "image": "/images/photo-1708443683334-1e41c52f33ac.jpg"
+      },
+      "color": "Camo",
+      "size": "M",
+      "quantity": 1,
+      "stockStatus": "In stock"
+    },
+    {
+      "id": "3",
+      "product": {
+        "name": "Mahabis Classic",
+        "price": 40,
+        "originalPrice": null,
+        "image": "/images/photo-1603218183500-7e1d62c3c679.jpg"
+      },
+      "color": "White",
+      "size": "M",
+      "quantity": 1,
+      "stockStatus": "In stock"
+    }
+  ],
+  "features": [
+    { "title": "Free shipping", "description": "On all orders over $50" },
+    { "title": "Easy returns", "description": "30-day hassle-free returns" },
+    { "title": "Secure checkout", "description": "256-bit SSL encryption" }
+  ],
+  "orderSummary": {
+    "promoCode": {
+      "placeholder": "Enter promo code",
+      "buttonText": "Apply"
+    },
+    "subtotal": 229,
+    "shipping": "Free",
+    "estimatedTax": "Calculated at checkout",
+    "saleDiscount": null,
+    "total": 229,
+    "currency": "USD"
+  },
+  "actions": {
+    "checkoutButton": "Proceed to Checkout",
+    "paypalButton": true
+  },
+  "youMayAlsoLike": [
+    {
+      "id": "4",
+      "name": "Denim Jacket",
+      "category": "Jackets",
+      "price": 95
+    },
+    {
+      "id": "5",
+      "name": "Running Sneakers",
+      "category": "Shoes",
+      "price": 89
+    },
+    {
+      "id": "6",
+      "name": "Leather Belt",
+      "category": "Accessories",
+      "price": 35
+    }
+  ]
+}

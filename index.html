@@ -1,0 +1,154 @@
+<!doctype html>
+<html
+  class="relative iidaq light"
+  data-brand="avocado"
+  data-font="sans"
+  data-theme="theme-olive"
+  lang="en"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name="viewport"
+    />
+    <meta
+      content="Engaging shopping experiences with advanced product filters, detailed descriptions, easy checkout, and full account management."
+      name="description"
+    />
+    <title>Shop | Preline Pro</title>
+    <link href="/css/css2.css" rel="stylesheet" />
+    <link href="/css/obfuscated.min.css" rel="stylesheet" />
+    <link href="/css/apexcharts.css" rel="stylesheet" />
+    <script src="/js/hs-unavailable-color-themes.js"></script>
+    <script>
+      function generateVariables(theme = "dashboard", brand = "blue") {
+        const styleId = "#hs-brand-variables";
+        let style = document.querySelector(styleId);
+
+        if (!style) {
+          style = document.createElement("style");
+          style.id = "hs-brand-variables";
+          document.head.append(style);
+        }
+
+        style.textContent = `
+          :root[data-theme="theme-${theme}"],
+          [data-theme="theme-${theme}"] {
+            --primary-50: var(--color-${brand}-50);
+            --primary-100: var(--color-${brand}-100);
+            --primary-200: var(--color-${brand}-200);
+            --primary-300: var(--color-${brand}-300);
+            --primary-400: var(--color-${brand}-400);
+            --primary-500: var(--color-${brand}-500);
+            --primary-600: var(--color-${brand}-600);
+            --primary-700: var(--color-${brand}-700);
+            --primary-800: var(--color-${brand}-800);
+            --primary-900: var(--color-${brand}-900);
+            --primary-950: var(--color-${brand}-950);
+          }
+        `;
+      }
+
+      (function () {
+        const unavailableColorThemes = window.HS_UNAVAILABLE_COLOR_THEMES ?? {};
+        const pathname = window.location.pathname;
+        const themesDefaults = {
+          default: "blue",
+          harvest: "amber",
+          retro: "fuchsia",
+          ocean: "cyan",
+          autumn: "yellow",
+          moon: "gray",
+          bubblegum: "pink",
+          cashmere: "mauve",
+          olive: "avocado",
+        };
+
+        let reducedThemes = [];
+        let defaultTheme = "default";
+        let defaultBrand = "blue";
+        let defaultFont = "sans";
+
+        for (const [key, value] of Object.entries(unavailableColorThemes)) {
+          const { theme, excludes } = value;
+
+          if (!pathname.includes(key)) continue;
+
+          defaultTheme = theme;
+
+          if (Array.isArray(excludes)) {
+            reducedThemes = excludes;
+          } else {
+            if (excludes["*"]) reducedThemes.push(...excludes["*"]);
+
+            for (const [nestedKey, nestedValue] of Object.entries(excludes)) {
+              if (nestedKey !== "*" && pathname.includes(nestedKey)) {
+                reducedThemes.push(...nestedValue);
+              }
+            }
+          }
+
+          break;
+        }
+
+        const colorTheme = localStorage.getItem("hs-clipboard-theme");
+        const brand = localStorage.getItem("hs-clipboard-brand");
+        const font = localStorage.getItem("hs-clipboard-font");
+        const html = document.documentElement;
+        const currentTheme =
+          colorTheme && !reducedThemes.includes(colorTheme)
+            ? colorTheme
+            : defaultTheme;
+        const currentBrand = brand || themesDefaults[currentTheme] || defaultBrand;
+        const currentFont = font || defaultFont;
+
+        html.setAttribute("data-theme", `theme-${currentTheme}`);
+        html.setAttribute("data-brand", currentBrand);
+        html.setAttribute("data-font", currentFont);
+        generateVariables(currentTheme, currentBrand);
+      })();
+    </script>
+    <script>
+      (function () {
+        const html = document.documentElement;
+        const storedTheme = localStorage.getItem("hs_theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const isLightMode =
+          storedTheme === "light" || (storedTheme === "auto" && !prefersDark);
+        const isDarkMode =
+          storedTheme === "dark" || (storedTheme === "auto" && prefersDark);
+
+        if (isLightMode) {
+          html.classList.remove("dark");
+          html.classList.add("light");
+        } else if (isDarkMode) {
+          html.classList.remove("light");
+          html.classList.add("dark");
+        }
+      })();
+    </script>
+    <style>
+      .apexcharts-tooltip.apexcharts-theme-light {
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .apexcharts-xaxistooltip {
+        background: var(--color-primary-600) !important;
+        border-color: var(--color-primary-600) !important;
+      }
+
+      .apexcharts-xaxistooltip:after,
+      .apexcharts-xaxistooltip:before {
+        border-bottom-color: var(--color-primary-600) !important;
+      }
+    </style>
+  </head>
+  <body class="gw9cg">
+    <div id="root"></div>
+    <script type="module" src="./src/main.jsx"></script>
+  </body>
+</html>
+
